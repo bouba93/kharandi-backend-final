@@ -18,9 +18,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ── Environnement ──────────────────────────────────────────────────────────
 env = environ.Env()
-environ.Env.read_env(BASE_DIR / ".env")
+# Lire .env en local — ignoré si absent (Render injecte les vars directement)
+_env_file = BASE_DIR / ".env"
+if _env_file.exists():
+    environ.Env.read_env(_env_file)
 
-SECRET_KEY    = env("SECRET_KEY")
+# SECRET_KEY : sur Render, définie dans les env vars du dashboard
+# En dev local sans .env, une clé par défaut est utilisée (ne PAS mettre en prod)
+SECRET_KEY    = env("SECRET_KEY", default="django-insecure-dev-change-me-in-production-kharandi")
 DEBUG         = env.bool("DEBUG", default=False)
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1", ".onrender.com"])
 
@@ -37,7 +42,6 @@ DJANGO_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django.contrib.postgres",
 ]
 
 THIRD_PARTY_APPS = [
@@ -109,15 +113,26 @@ TEMPLATES = [
 # ══════════════════════════════════════════════════════════════════════════
 #  BASE DE DONNÉES — PostgreSQL Render
 # ══════════════════════════════════════════════════════════════════════════
-DATABASE_URL = env("DATABASE_URL", default="sqlite:///kharandi_dev.db")
+DATABASE_URL = env("DATABASE_URL", default="")
 
-DATABASES = {
-    "default": dj_database_url.parse(
-        DATABASE_URL,
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
-}
+if DATABASE_URL:
+    # PostgreSQL sur Render
+    DATABASES = {
+        "default": dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    }
+else:
+    # Fallback SQLite pour dev local sans .env
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME":   BASE_DIR / "kharandi_dev.db",
+        }
+    }
+
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -412,5 +427,4 @@ UNFOLD = {
 }
 
 # ── Crons HTTP (cron-job.org) ─────────────────────────────────────────────
-import os as _os
-CRON_SECRET = _os.environ.get('CRON_SECRET', '')
+CRON_SECRET = env("CRON_SECRET", default="")
