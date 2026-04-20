@@ -1,0 +1,52 @@
+# ══════════════════════════════════════════════════════════════════════════
+#  KHARANDI — Requirements (Render.com compatible, sans Celery/Redis)
+# ══════════════════════════════════════════════════════════════════════════
+
+# ── Core Django ────────────────────────────────────────────────────────────
+Django==5.0.6
+djangorestframework==3.15.2
+djangorestframework-simplejwt==5.3.1
+django-cors-headers==4.4.0
+django-filter==24.2
+django-environ==0.11.2
+gunicorn==22.0.0
+
+# ── Base de données (PostgreSQL Render) ────────────────────────────────────
+psycopg2-binary==2.9.9
+dj-database-url==2.2.0
+
+# ── Fichiers statiques ────────────────────────────────────────────────────
+whitenoise==6.7.0
+
+# ── Storage média (Cloudinary — gratuit) ─────────────────────────────────
+cloudinary==1.40.0
+django-cloudinary-storage==0.3.0
+
+# ── SMS ───────────────────────────────────────────────────────────────────
+nimbasms==1.0.0
+
+# ── Paiements ─────────────────────────────────────────────────────────────
+requests==2.32.3
+
+# ── PDF & Excel ───────────────────────────────────────────────────────────
+reportlab==4.2.2
+openpyxl==3.1.5
+
+# ── Sécurité & Auth ──────────────────────────────────────────────────────
+django-axes==6.5.0
+cryptography==42.0.8
+
+# ── Admin ─────────────────────────────────────────────────────────────────
+django-unfold==0.36.0
+django-auditlog==3.0.0
+
+# ── Téléphone ─────────────────────────────────────────────────────────────
+phonenumbers==8.13.40
+django-phonenumber-field==7.3.0
+
+# ── Images ────────────────────────────────────────────────────────────────
+Pillow==10.4.0
+
+# ── Utilitaires ───────────────────────────────────────────────────────────
+python-slugify==8.0.4
+django-extensions==3.2.3

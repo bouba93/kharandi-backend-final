@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: kharandi-backend
+    env: python
+    region: frankfurt
+    plan: free
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120"
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: config.settings
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: kharandi-db
+          property: connectionString
+      - key: PYTHON_VERSION
+        value: "3.12.0"
+
+databases:
+  - name: kharandi-db
+    databaseName: kharandi
+    user: kharandi
+    plan: free
+    region: frankfurt
