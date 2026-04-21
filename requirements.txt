@@ -12,7 +12,7 @@ django-environ==0.11.2
 gunicorn==22.0.0
 
 # ── Base de données (PostgreSQL Render) ────────────────────────────────────
-psycopg2-binary==2.9.9
+psycopg2-binary==2.9.10
 dj-database-url==2.2.0
 
 # ── Fichiers statiques ────────────────────────────────────────────────────
