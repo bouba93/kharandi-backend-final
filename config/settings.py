@@ -116,12 +116,13 @@ TEMPLATES = [
 DATABASE_URL = env("DATABASE_URL", default="")
 
 if DATABASE_URL:
-    # PostgreSQL sur Render
+    # PostgreSQL sur Render — psycopg3 (compatible Python 3.14)
     DATABASES = {
         "default": dj_database_url.parse(
             DATABASE_URL,
             conn_max_age=600,
             conn_health_checks=True,
+            engine="django.db.backends.postgresql",
         )
     }
 else:

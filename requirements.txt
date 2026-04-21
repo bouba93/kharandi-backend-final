@@ -1,5 +1,5 @@
 # ══════════════════════════════════════════════════════════════════════════
-#  KHARANDI — Requirements (Render.com compatible, sans Celery/Redis)
+#  KHARANDI — Requirements (Python 3.14 / Render.com)
 # ══════════════════════════════════════════════════════════════════════════
 
 # ── Core Django ────────────────────────────────────────────────────────────
@@ -11,19 +11,20 @@ django-filter==24.2
 django-environ==0.11.2
 gunicorn==22.0.0
 
-# ── Base de données (PostgreSQL Render) ────────────────────────────────────
-psycopg2-binary==2.9.10
+# ── Base de données PostgreSQL ─────────────────────────────────────────────
+# psycopg2-binary ne compile pas sur Python 3.14 → utiliser psycopg3
+psycopg[binary]==3.2.4
 dj-database-url==2.2.0
 
 # ── Fichiers statiques ────────────────────────────────────────────────────
 whitenoise==6.7.0
 
-# ── Storage média (Cloudinary — gratuit) ─────────────────────────────────
+# ── Storage média (Cloudinary) ────────────────────────────────────────────
 cloudinary==1.40.0
 django-cloudinary-storage==0.3.0
 
 # ── SMS ───────────────────────────────────────────────────────────────────
-nimbasms==1.0.0
+nimbasms==1.0.2
 
 # ── Paiements ─────────────────────────────────────────────────────────────
 requests==2.32.3
