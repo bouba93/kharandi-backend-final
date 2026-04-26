@@ -13,7 +13,7 @@ gunicorn==22.0.0
 
 # ── Base de données PostgreSQL ─────────────────────────────────────────────
 # psycopg2-binary ne compile pas sur Python 3.14 → utiliser psycopg3
-psycopg[binary]==3.2.4
+psycopg[binary]
 dj-database-url==2.2.0
 
 # ── Fichiers statiques ────────────────────────────────────────────────────
